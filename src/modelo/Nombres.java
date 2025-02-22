@@ -13,4 +13,14 @@ public enum Nombres {
         Random rand = new Random();
         return nombres[rand.nextInt(nombres.length)];
     }
+    public static String obtenerNombrePorRaza(Raza raza){
+        return switch (raza){
+            case HUMANO -> HUMANO.getNombreAleatorio();
+            case ORCO -> ORCO.getNombreAleatorio();
+            case ELFO ->ELFO.getNombreAleatorio();
+            default -> "Desconocido";
+        };
+
+
+    }
 }

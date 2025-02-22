@@ -66,14 +66,16 @@ public class Personaje {
         this.estadisticas = estadisticas;
     }
 
-    // Método toString modificado
+    
     @Override
     public String toString() {
-        return "Nombre: " + nombre + "\n" +
-               "Apodo: " + apodo + "\n" +
-               "Raza: " + raza + "\n" +
-               "Edad: " + edad + "\n" +
-               "Nivel: " + nivel + "\n" +
-               estadisticas.toString(); // Imprime las estadísticas del personaje
-    }
+    return "Personaje {" +
+           "nombre =' " + nombre + '\'' +
+           ", apodo =' " + apodo + '\'' +
+           ", raza =' " + raza + '\'' +
+           ", edad = " + edad +
+           ", nivel = " + nivel +
+           ", estadisticas = " + estadisticas +
+           '}';
+}
 }

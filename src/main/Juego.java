@@ -1,6 +1,7 @@
 package main;
 import gestion.GestorPersonajes;
 
+
 public class Juego{
     private Menu menu;
     private GestorPersonajes gPersonaje;

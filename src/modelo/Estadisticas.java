@@ -47,4 +47,5 @@ public class Estadisticas {
                "Fuerza: " + fuerza + "\n" +
                "Armadura: " + armadura;
     }
+  
 }

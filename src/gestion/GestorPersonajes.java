@@ -1,4 +1,4 @@
-/*package gestion;
+package gestion;
 import java.util.*;
 
 import modelo.*;
@@ -9,7 +9,6 @@ public class GestorPersonajes {
     private Random random;
     private Set<String> nombresUsados;
     private Set<String> apodosUsados;
-    
 
     public GestorPersonajes() {
         this.personajes1 = new ArrayList<>();
@@ -30,13 +29,19 @@ public class GestorPersonajes {
                 personajes2.add(p);
             }
         }
+
+        System.out.println("Personajes generados para el Jugador 1:");
+        for (Personaje p : personajes1) {
+            System.out.println(p.toString()); 
+        }
+
+        System.out.println("Personajes generados para el Jugador 2:");
+        for (Personaje p : personajes2) {
+            System.out.println(p.toString());  
+        }
+        
         System.out.println("Personajes generados exitosamente!!!");
     }
-
-    public void generarPersonajeManual() {
-        System.out.println("Funcionalidad aún no implementada.");
-    }
-
     // Genera un personaje con atributos aleatorios
     private Personaje generarPersonajeAleatorio(String jugador) {
         Raza raza = Raza.values()[random.nextInt(Raza.values().length)];
@@ -54,21 +59,22 @@ public class GestorPersonajes {
         );
 
         Personaje personaje = new Personaje(nombre, apodo, raza.name(), edad, nivel, estadisticas);
-        System.out.println(jugador + " - " + personaje);
+       
         return personaje;
     }
+
     private String obtenerNombreAleatorio(Raza raza) {
         String nombre;
         do {
             switch (raza) {
                 case HUMANO:
-                    nombre = NombreHumano.values()[random.nextInt(NombreHumano.values().length)].name();
+                    nombre = Nombres.HUMANO.getNombreAleatorio();
                     break;
                 case ORCO:
-                    nombre = NombreOrco.values()[random.nextInt(NombreOrco.values().length)].name();
+                    nombre = Nombres.ORCO.getNombreAleatorio();
                     break;
                 case ELFO:
-                    nombre = NombreElfo.values()[random.nextInt(NombreElfo.values().length)].name();
+                    nombre = Nombres.ELFO.getNombreAleatorio();
                     break;
                 default:
                     nombre = "Desconocido";
@@ -83,24 +89,72 @@ public class GestorPersonajes {
         do {
             switch (raza) {
                 case HUMANO:
-                    apodo = ApodoHumano.values()[random.nextInt(ApodoHumano.values().length)].name();
+                    apodo = Apodos.HUMANO.getApodoAleatorio();
                     break;
                 case ORCO:
-                    apodo = ApodoOrco.values()[random.nextInt(ApodoOrco.values().length)].name();
+                    apodo = Apodos.ORCO.getApodoAleatorio();
                     break;
                 case ELFO:
-                    apodo = ApodoElfo.values()[random.nextInt(ApodoElfo.values().length)].name();
+                    apodo = Apodos.ELFO.getApodoAleatorio();
                     break;
                 default:
-                    apodo = "SinApodo";
+                    apodo = "Sin Apodo";
             }
         } while (apodosUsados.contains(apodo));
         apodosUsados.add(apodo);
         return apodo;
     }
-}
+    public void generarPersonajeManual() {
+        Scanner scanner = new Scanner(System.in);
     
-*/
-
-
-
+        System.out.println("Generando un personaje manualmente...");
+    
+        // Solicitar el nombre
+        System.out.print("Ingrese el nombre del personaje: ");
+        String nombre = scanner.nextLine();
+    
+        // Solicitar el apodo
+        System.out.print("Ingrese el apodo del personaje: ");
+        String apodo = scanner.nextLine();
+    
+        // Solicitar la raza
+        System.out.print("Seleccione la raza (HUMANO, ORCO, ELFO): ");
+        String razaInput = scanner.nextLine().toUpperCase();
+        Raza raza;
+        try {
+            raza = Raza.valueOf(razaInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Raza no válida. Se asignará 'HUMANO' por defecto.");
+            raza = Raza.HUMANO; // Asignar un valor por defecto
+        }
+    
+        // Solicitar la edad
+        System.out.print("Ingrese la edad del personaje (0-300): ");
+        int edad = Integer.parseInt(scanner.nextLine());
+    
+        // Solicitar el nivel
+        System.out.print("Ingrese el nivel del personaje (1-10): ");
+        int nivel = Integer.parseInt(scanner.nextLine());
+    
+        // Crear estadísticas aleatorias o solicitarlas al usuario
+        Estadisticas estadisticas = new Estadisticas(
+            100, // Salud
+            (int) (Math.random() * 10) + 1, // Fuerza aleatoria
+            (int) (Math.random() * 5) + 1, // Destreza aleatoria
+            (int) (Math.random() * 10) + 1, // Armadura aleatoria
+            (int) (Math.random() * 10) + 1  // Velocidad aleatoria
+        );
+    
+        // Crear el personaje
+        Personaje personaje = new Personaje(nombre, apodo, raza.name(), edad, nivel, estadisticas);
+        
+        // Agregar el personaje a la lista correspondiente
+        if (personajes1.size() < 3) {
+            personajes1.add(personaje);
+        } else {
+            personajes2.add(personaje);
+        }
+    
+        System.out.println("Personaje creado exitosamente: " + personaje.toString());
+    } 
+}
